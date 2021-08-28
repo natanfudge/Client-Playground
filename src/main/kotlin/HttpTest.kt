@@ -4,6 +4,7 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.*
 import java.io.File
 import java.io.IOException
+import java.lang.Integer.min
 
 
 private fun <T> T.applyIf(case: Boolean, application: T. () -> Unit): T = if (case) apply(application) else this
@@ -20,8 +21,11 @@ class HttpTest(
     private val useGzip: Boolean,
     private val local: Boolean,
     private val directApi: Boolean,
-    private val cache: Boolean
+    private val cache: Boolean,
+    private val malformed: Boolean
 ) {
+    private val crash = File(if (malformed) "malformed_crash.txt" else "crash.txt").readText()
+
     private val client = OkHttpClient.Builder()
         .applyIf(cache) {
             cache(
@@ -64,12 +68,13 @@ class HttpTest(
 
         testRequest(request)
     }
-//https://europe-west1-crashy-9dd87.cloudfunctions.net/getCrash
+
+    //https://europe-west1-crashy-9dd87.cloudfunctions.net/getCrash
     fun testGet(id: String) {
         val path = if (directApi) "getCrash" else "widgets/api/get-crash"
 
         val request = Request.Builder()
-            .cacheControl(CacheControl.Builder() .build())
+            .cacheControl(CacheControl.Builder().build())
             .url("$domain/${path}/$id").build()
 
         testRequest(request)
@@ -79,7 +84,7 @@ class HttpTest(
         val startTime = System.currentTimeMillis()
         client.newCall(request).execute().use { response ->
             val body = response.body!!.string();
-            println("Got response: ${body.substring(0, 50)}")
+            println("Got response: ${body.substring(0, min(100,body.length))} with code ${response.code}")
             val endTime = System.currentTimeMillis()
             println("Time taken: ${endTime - startTime}ms")
         }
