@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="EndpointTesting" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-09-16T11:55:38" hostname="DESKTOP-8B13L1D" time="5.916">
+  <properties/>
+  <testcase name="Delete Crash" classname="EndpointTesting" time="0.372"/>
+  <testcase name="Invalid deleteCrash requests" classname="EndpointTesting" time="0.189"/>
+  <testcase name="Invalid uploadCrash requests" classname="EndpointTesting" time="5.152"/>
+  <testcase name="Upload Crash" classname="EndpointTesting" time="0.037"/>
+  <testcase name="Get Crash" classname="EndpointTesting" time="0.077"/>
+  <testcase name="Invalid getCrash requests" classname="EndpointTesting" time="0.089"/>
+  <system-out><![CDATA[Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+Miss cache
+]]></system-out>
+  <system-err><![CDATA[Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.Cache.put$okhttp(Cache.kt:197)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:136)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.Cache.put$okhttp(Cache.kt:197)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:136)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:162)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.get(DiskLruCache.kt:426)
+	at okhttp3.Cache.get$okhttp(Cache.kt:171)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:47)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:156)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+Sep 16, 2021 2:55:39 PM okhttp3.internal.platform.Platform log
+WARNING: DiskLruCache http_cache is corrupt: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp, removing
+java.io.IOException: failed to delete http_cache\81bd27a6c297c255505c3844dbc75c97.1.tmp
+	at okhttp3.internal.io.FileSystem$Companion$SystemFileSystem.delete(FileSystem.kt:78)
+	at okhttp3.internal.cache.DiskLruCache.processJournal(DiskLruCache.kt:373)
+	at okhttp3.internal.cache.DiskLruCache.initialize(DiskLruCache.kt:237)
+	at okhttp3.internal.cache.DiskLruCache.remove(DiskLruCache.kt:592)
+	at okhttp3.Cache.remove$okhttp(Cache.kt:228)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipResponseInterceptor.intercept(HttpTest.kt:195)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at GzipRequestInterceptor.intercept(HttpTest.kt:156)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+]]></system-err>
+</testsuite>

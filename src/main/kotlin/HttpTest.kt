@@ -1,3 +1,4 @@
+import TestCrash.*
 import okhttp3.*
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -5,9 +6,21 @@ import okio.*
 import java.io.File
 import java.io.IOException
 import java.lang.Integer.min
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 private fun <T> T.applyIf(case: Boolean, application: T. () -> Unit): T = if (case) apply(application) else this
+private fun <T> T.mapIf(case: Boolean, application: (T) -> T): T = if (case) let(application) else this
+
+enum class TestCrash {
+    Forge,
+    Fabric,
+    Malformed,
+    Huge
+}
 
 /////////////////
 // Post:
@@ -17,14 +30,21 @@ private fun <T> T.applyIf(case: Boolean, application: T. () -> Unit): T = if (ca
 //  - Online, GZIP: 300-400ms
 //  - Online, GZIP through and through: ~200MS
 /////////////////
+
+fun getRandomString(length: Int): String {
+    val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+    return (1..length)
+        .map { allowedChars.random() }
+        .joinToString("")
+}
+
 class HttpTest(
-    private val useGzip: Boolean,
-    private val local: Boolean,
-    private val directApi: Boolean,
-    private val cache: Boolean,
-    private val malformed: Boolean
+    local: Boolean = true,
+
+    useGzip: Boolean = true,
+    private val directApi: Boolean = true,
+    cache: Boolean = true,
 ) {
-    private val crash = File(if (malformed) "malformed_crash.txt" else "crash.txt").readText()
 
     private val client = OkHttpClient.Builder()
         .applyIf(cache) {
@@ -38,7 +58,7 @@ class HttpTest(
             )
         }
         .applyIf(useGzip) { addInterceptor(GzipRequestInterceptor()) }
-        .addInterceptor(LoggingInterceptor())
+        .readTimeout(10,TimeUnit.MINUTES)
         .addInterceptor(GzipResponseInterceptor())
         .eventListener(object : EventListener() {
             override fun cacheHit(call: Call, response: Response) {
@@ -58,33 +78,67 @@ class HttpTest(
     private val domain = if (local) "http://localhost:5001/crashy-9dd87/europe-west1"
     else "https://europe-west1-crashy-9dd87.cloudfunctions.net/"
 
+    suspend fun makeRequest(request: Request): Response = suspendCoroutine { cont ->
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                cont.resumeWithException(e)
+            }
 
-    fun testPost() {
-        val path = if (directApi) "uploadCrash" else "widgets/api/upload-crash"
-
-        val request = Request.Builder()
-            .post(crash.toRequestBody())
-            .url("$domain/$path").build()
-
-        testRequest(request)
+            override fun onResponse(call: Call, response: Response) {
+                cont.resume(response)
+            }
+        })
     }
 
-    //https://europe-west1-crashy-9dd87.cloudfunctions.net/getCrash
-    fun testGet(id: String) {
+    suspend fun uploadCrash(crash: TestCrash, config: Request.Builder.() -> Unit = {}): Response {
+        val path = if (directApi) "uploadCrash" else "widgets/api/upload-crash"
+
+        val crashText = getCrashLogContents(crash)
+
+        val request = Request.Builder()
+            .post(crashText.toRequestBody())
+            .url("$domain/$path").apply(config).build()
+
+        return makeRequest(request)
+    }
+
+    private fun httpParameters(vararg parameters: Pair<String,String?>) : String {
+        val notNull = parameters.filter{it.second != null}
+        if(notNull.isEmpty()) return  ""
+        else return "?" + notNull.joinToString("&"){(k,v) -> "$k=$v"}
+    }
+
+    suspend fun deleteCrash(id: String?, key: String?): Response {
+        val path = if (directApi) "deleteCrash" else "widgets/api/delete-crash"
+
+
+        val request = Request.Builder()
+            .delete()
+            .url(
+                "$domain/$path" + httpParameters("crashId" to id, "key" to key)
+            )
+            .build()
+
+        return makeRequest(request)
+    }
+
+
+
+    suspend fun getCrash(id: String?) : Response {
         val path = if (directApi) "getCrash" else "widgets/api/get-crash"
 
         val request = Request.Builder()
             .cacheControl(CacheControl.Builder().build())
-            .url("$domain/${path}/$id").build()
+            .url(if (id == null) "$domain/${path}" else "$domain/${path}/$id").build()
 
-        testRequest(request)
+        return makeRequest(request)
     }
 
     private fun testRequest(request: Request) {
         val startTime = System.currentTimeMillis()
         client.newCall(request).execute().use { response ->
             val body = response.body!!.string();
-            println("Got response: ${body.substring(0, min(100,body.length))} with code ${response.code}")
+            println("Got response: ${body.substring(0, min(100, body.length))} with code ${response.code}")
             val endTime = System.currentTimeMillis()
             println("Time taken: ${endTime - startTime}ms")
         }
@@ -92,31 +146,6 @@ class HttpTest(
 
 }
 
-class LoggingInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-
-//       println("Unzipped request: ${chain.request().body!!.source().unzip()}")
-//       println("Zipped request: ${chain.request().body!!.source().buffer().readUtf8()}")
-        return chain.proceed(chain.request())
-    }
-
-    fun RequestBody.source(): Source {
-        val buffer = Buffer()
-        writeTo(buffer)
-        return buffer
-    }
-
-    private fun bodyToString(request: Request): String? {
-        return try {
-            val copy = request.newBuilder().build()
-            val buffer = Buffer()
-            copy.body!!.writeTo(buffer)
-            buffer.readUtf8()
-        } catch (e: IOException) {
-            "did not work"
-        }
-    }
-}
 
 class GzipRequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -127,7 +156,6 @@ class GzipRequestInterceptor : Interceptor {
             return chain.proceed(originalRequest)
         }
         val compressedRequest = originalRequest.newBuilder()
-//            .header("Content-Encoding", "gzip")
             .header("Content-Type", "application/gzip")
             .method(originalRequest.method, gzip(originalRequest.body))
             .build()
@@ -151,6 +179,13 @@ class GzipRequestInterceptor : Interceptor {
             }
         }
     }
+}
+
+ fun getCrashLogContents(crash: TestCrash) = when (crash) {
+    Forge -> File("forge_crash.txt").readText()
+    Fabric -> File("fabric_crash.txt").readText()
+    Malformed -> File("malformed_crash.txt").readText()
+    Huge -> buildString { repeat(10_000_000) { append(getRandomString(1)) } }
 }
 
 class GzipResponseInterceptor : Interceptor {
