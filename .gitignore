@@ -1,0 +1,4 @@
+.gradle/*
+.idea/*
+build/*
+http_cache/*
