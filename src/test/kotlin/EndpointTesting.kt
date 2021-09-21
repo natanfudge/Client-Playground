@@ -1,10 +1,13 @@
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import okhttp3.Response
 import org.junit.Test
 import java.net.HttpURLConnection
 import kotlin.test.assertEquals
 
 class EndpointTesting {
+    private val realServer = true
+
     @Test
     fun `Invalid uploadCrash requests`() = runBlocking {
         val response2 = HttpTest(useGzip = false).uploadCrash(TestCrash.Fabric)
@@ -27,8 +30,10 @@ class EndpointTesting {
 
     @Test
     fun `Upload Crash`() = runBlocking {
-        val response4 = HttpTest().uploadCrash(TestCrash.Fabric)
-        assertEquals(HttpURLConnection.HTTP_OK, response4.code)
+        val (response,parsed) = HttpTest(local = !realServer).uploadCrashAndParse(TestCrash.Fabric)
+        assertEquals(HttpURLConnection.HTTP_OK, response.code)
+
+        println("ID = ${parsed.crashId}, code = ${parsed.key}")
     }
 
     @Test
@@ -47,14 +52,17 @@ class EndpointTesting {
     @Test
     fun `Get Crash`() = runBlocking {
         with(HttpTest()) {
-            val uploadResponse = uploadCrash(TestCrash.Fabric)
-            val uploadResponseBody =
-                Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!.string())
+            val (_, uploadResponse) = uploadCrashAndParse(TestCrash.Fabric)
 
-            val getResponse = getCrash(uploadResponseBody.crashId)
+            val getResponse = getCrash(uploadResponse.crashId)
             val getResponseBody = getResponse.body!!.string()
             assertEquals(getCrashLogContents(TestCrash.Fabric), getResponseBody)
         }
+    }
+
+    private suspend fun HttpTest.uploadCrashAndParse(crash: TestCrash): Pair<Response, UploadCrashResponse>{
+        val uploadResponse = uploadCrash(crash)
+        return uploadResponse to Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!.string())
     }
 
     @Test
