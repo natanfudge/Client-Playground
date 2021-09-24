@@ -25,7 +25,6 @@ class EndpointTesting {
             val response4 = uploadCrash(TestCrash.Malformed)
             assertEquals(HttpURLConnection.HTTP_BAD_REQUEST, response4.code)
         }
-
     }
 
     @Test
@@ -59,6 +58,8 @@ class EndpointTesting {
             assertEquals(getCrashLogContents(TestCrash.Fabric), getResponseBody)
         }
     }
+
+
 
     private suspend fun HttpTest.uploadCrashAndParse(crash: TestCrash): Pair<Response, UploadCrashResponse>{
         val uploadResponse = uploadCrash(crash)

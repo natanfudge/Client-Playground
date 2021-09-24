@@ -111,18 +111,13 @@ class HttpTest(
     suspend fun deleteCrash(id: String?, key: String?): Response {
         val path = if (directApi) "deleteCrash" else "widgets/api/delete-crash"
 
-
         val request = Request.Builder()
             .delete()
-            .url(
-                "$domain/$path" + httpParameters("crashId" to id, "key" to key)
-            )
+            .url("$domain/$path" + httpParameters("crashId" to id, "key" to key))
             .build()
 
         return makeRequest(request)
     }
-
-
 
     suspend fun getCrash(id: String?) : Response {
         val path = if (directApi) "getCrash" else "widgets/api/get-crash"
