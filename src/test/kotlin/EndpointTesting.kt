@@ -6,7 +6,7 @@ import java.net.HttpURLConnection
 import kotlin.test.assertEquals
 
 class EndpointTesting {
-    private val realServer = true
+    private val realServer = false
 
     @Test
     fun `Invalid uploadCrash requests`() = runBlocking {
@@ -14,9 +14,7 @@ class EndpointTesting {
         assertEquals(HttpURLConnection.HTTP_UNSUPPORTED_TYPE, response2.code)
 
         with(HttpTest()) {
-            val response1 = uploadCrash(TestCrash.Fabric) {
-                header("content-encoding", "gzip")
-            }
+            val response1 = uploadCrash(TestCrash.Fabric, headers = mapOf("content-encoding" to "gzip"))
             assertEquals(HttpURLConnection.HTTP_UNSUPPORTED_TYPE, response1.code)
 
             val response3 = uploadCrash(TestCrash.Huge)
@@ -54,16 +52,16 @@ class EndpointTesting {
             val (_, uploadResponse) = uploadCrashAndParse(TestCrash.Fabric)
 
             val getResponse = getCrash(uploadResponse.crashId)
-            val getResponseBody = getResponse.body!!.string()
+            val getResponseBody = getResponse.body
             assertEquals(getCrashLogContents(TestCrash.Fabric), getResponseBody)
         }
     }
 
 
 
-    private suspend fun HttpTest.uploadCrashAndParse(crash: TestCrash): Pair<Response, UploadCrashResponse>{
+    private suspend fun HttpTest.uploadCrashAndParse(crash: TestCrash): Pair<TestHttpResponse, UploadCrashResponse>{
         val uploadResponse = uploadCrash(crash)
-        return uploadResponse to Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!.string())
+        return uploadResponse to Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!)
     }
 
     @Test
@@ -82,7 +80,7 @@ class EndpointTesting {
             val uploadResponse = uploadCrash(TestCrash.Fabric)
             assertEquals(HttpURLConnection.HTTP_OK, uploadResponse.code)
             val uploadResponseBody =
-                Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!.string())
+                Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!)
 
             val deleteResponse = deleteCrash(uploadResponseBody.crashId, "wrong key")
             assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, deleteResponse.code)
@@ -95,7 +93,7 @@ class EndpointTesting {
             val uploadResponse = uploadCrash(TestCrash.Fabric)
             assertEquals(HttpURLConnection.HTTP_OK, uploadResponse.code)
             val uploadResponseBody =
-                Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!.string())
+                Json.decodeFromString(UploadCrashResponse.serializer(), uploadResponse.body!!)
 
             val deleteResponse = deleteCrash(uploadResponseBody.crashId, uploadResponseBody.key)
             assertEquals(HttpURLConnection.HTTP_OK, deleteResponse.code)
