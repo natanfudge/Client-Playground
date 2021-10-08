@@ -37,11 +37,11 @@ class HttpTest(
     private val directApi: Boolean = true,
     private val cache: Boolean = true,
     private val useGzip: Boolean = true,
-    private val clientType: ClientLibrary = ClientLibrary.OkHttp
+    private val clientLibrary: ClientLibrary = ClientLibrary.OkHttp
 ) {
-    private val client: IHttpClient = when (clientType) {
+    private val client: IHttpClient = when (clientLibrary) {
         ClientLibrary.OkHttp -> OkHttpTestClient(cache, useGzip)
-        ClientLibrary.Apache -> TODO()
+        ClientLibrary.Apache -> Java11HttpClient()
     }
 
     private val domain = if (local) "http://localhost:5001/crashy-9dd87/europe-west1"

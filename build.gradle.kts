@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
-    implementation("org.apache.httpcomponents:httpclient:4.5.13")
+//    implementation("org.apache.httpcomponents:httpclient:4.5.13")
     testImplementation(kotlin("test"))
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
 }

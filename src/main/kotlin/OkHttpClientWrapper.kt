@@ -10,23 +10,18 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class OkHttpTestClient(cache: Boolean , useGzip: Boolean ) : IHttpClient {
+class OkHttpTestClient(cache: Boolean, useGzip: Boolean) : IHttpClient {
 
-    private val client = OkHttpClient.Builder()
-        .applyIf(cache) {
+    private val client = OkHttpClient.Builder().applyIf(cache) {
             cache(
                 Cache(
                     directory = File("http_cache"),
                     // $0.05 worth of phone storage in 2020
                     maxSize = 50L * 1024L * 1024L, // 50 MiB
-
                 )
             )
-        }
-        .applyIf(useGzip) { addInterceptor(GzipRequestInterceptor()) }
-        .readTimeout(10, TimeUnit.MINUTES)
-        .addInterceptor(GzipResponseInterceptor())
-        .eventListener(object : EventListener() {
+        }.applyIf(useGzip) { addInterceptor(GzipRequestInterceptor()) }.readTimeout(10, TimeUnit.MINUTES)
+        .addInterceptor(GzipResponseInterceptor()).eventListener(object : EventListener() {
             override fun cacheHit(call: Call, response: Response) {
                 println("Hit cache")
             }
@@ -38,8 +33,7 @@ class OkHttpTestClient(cache: Boolean , useGzip: Boolean ) : IHttpClient {
             override fun cacheConditionalHit(call: Call, cachedResponse: Response) {
                 println("Conditional hit ")
             }
-        })
-        .build()
+        }).build()
 
     private suspend fun makeRequest(request: Request): Response = suspendCoroutine { cont ->
         client.newCall(request).enqueue(object : Callback {
@@ -52,30 +46,23 @@ class OkHttpTestClient(cache: Boolean , useGzip: Boolean ) : IHttpClient {
             }
         })
     }
-    private suspend fun makeTestRequest(request: Request) = with(makeRequest(request)){
-        TestHttpResponse(code,body?.string())
+
+    private suspend fun makeTestRequest(request: Request) = with(makeRequest(request)) {
+        TestHttpResponse(code, body?.string())
     }
 
     override suspend fun get(url: String): TestHttpResponse {
-        val request = Request.Builder()
-            .cacheControl(CacheControl.Builder().build())
-            .url(url).build()
+        val request = Request.Builder().cacheControl(CacheControl.Builder().build()).url(url).build()
         return makeTestRequest(request)
     }
 
     override suspend fun post(url: String, body: String, headers: Map<String, String>): TestHttpResponse {
-        val request = Request.Builder()
-            .post(body.toRequestBody())
-            .headers(headers.toHeaders())
-            .url(url).build()
+        val request = Request.Builder().post(body.toRequestBody()).headers(headers.toHeaders()).url(url).build()
         return makeTestRequest(request)
     }
 
     override suspend fun delete(url: String): TestHttpResponse {
-        val request = Request.Builder()
-            .delete()
-            .url(url)
-            .build()
+        val request = Request.Builder().delete().url(url).build()
         return makeTestRequest(request)
     }
 }
@@ -88,10 +75,8 @@ class GzipRequestInterceptor : Interceptor {
         if (originalRequest.body == null || originalRequest.header("Content-Encoding") != null) {
             return chain.proceed(originalRequest)
         }
-        val compressedRequest = originalRequest.newBuilder()
-            .header("Content-Type", "application/gzip")
-            .method(originalRequest.method, gzip(originalRequest.body))
-            .build()
+        val compressedRequest = originalRequest.newBuilder().header("Content-Type", "application/gzip")
+            .method(originalRequest.method, gzip(originalRequest.body)).build()
         return chain.proceed(compressedRequest)
     }
 
@@ -132,15 +117,9 @@ class GzipResponseInterceptor : Interceptor {
         }
         val bodyString: String = response.body!!.source().unzip()
         val responseBody = bodyString.toResponseBody(response.body!!.contentType())
-        val strippedHeaders = response.headers.newBuilder()
-            .removeAll("Content-Encoding")
-            .removeAll("Content-Length")
-            .build()
-        return response.newBuilder()
-            .headers(strippedHeaders)
-            .body(responseBody)
-            .message(response.message)
-            .build()
+        val strippedHeaders =
+            response.headers.newBuilder().removeAll("Content-Encoding").removeAll("Content-Length").build()
+        return response.newBuilder().headers(strippedHeaders).body(responseBody).message(response.message).build()
     }
 
     private fun isGzipped(response: Response): Boolean {
