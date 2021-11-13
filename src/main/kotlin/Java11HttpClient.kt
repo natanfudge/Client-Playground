@@ -29,12 +29,6 @@ class Java11HttpClient : IHttpClient {
             }
             baos.toByteArray()
         }
-//        val gzip = GZIPOutputStream(outstream)
-//        try {
-//            wrappedEntity.writeTo(gzip)
-//        } finally {
-//            gzip.close()
-//        }
 
         val request = HttpRequest.newBuilder(URI.create(url)).apply {
             for ((headerName, headerValue) in headers) {
@@ -46,15 +40,6 @@ class Java11HttpClient : IHttpClient {
         with(client.sendSuspend(request)) {
             return TestHttpResponse(statusCode(), body())
         }
-//        HttpClients.createDefault().use { client ->
-//            val post = HttpPost(url).apply {
-//                entity = GzipCompressingEntity(StringEntity(body, Charsets.UTF_16))
-//            }
-//
-//            return with(client.executeSuspend(post)) {
-//                TestHttpResponse(statusLine.statusCode,EntityUtils.toString(entity))
-//            }
-//        }
     }
 
     override suspend fun delete(url: String): TestHttpResponse {
