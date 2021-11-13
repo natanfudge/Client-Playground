@@ -113,4 +113,12 @@ class EndpointTesting {
             assertEquals(HttpURLConnection.HTTP_NOT_FOUND, getResponse.code)
         }
     }
+
+    @Test
+    fun `Download database`() = runBlocking {
+        with(HttpTest(local = false)) {
+            val unauthorizedResponse = downloadDatabaseOverview("blah")
+            assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, unauthorizedResponse.code)
+        }
+    }
 }

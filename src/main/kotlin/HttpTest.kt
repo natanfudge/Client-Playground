@@ -47,6 +47,11 @@ class HttpTest(
     private val domain = if (local) "http://localhost:5001/crashy-9dd87/europe-west1"
     else "https://europe-west1-crashy-9dd87.cloudfunctions.net/"
 
+    suspend fun downloadDatabaseOverview(password: String): TestHttpResponse {
+        val path = "downloadDatabaseOverview"
+
+        return client.get(url = "$domain/$path" + httpParameters("password" to password))
+    }
 
     suspend fun uploadCrash(crash: TestCrash, headers: Map<String,String> = mapOf()): TestHttpResponse {
         val path = if (directApi) "uploadCrash" else "widgets/api/upload-crash"

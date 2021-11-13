@@ -18,3 +18,4 @@ data class TestHttpResponse (
 //)
 
 fun <T> T.applyIf(case: Boolean, application: T. () -> Unit): T = if (case) apply(application) else this
+fun <T> T.letIf(case: Boolean, application: (T) -> T): T = if (case) let(application) else this
