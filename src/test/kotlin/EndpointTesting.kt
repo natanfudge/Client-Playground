@@ -1,28 +1,28 @@
+import HttpTest.Companion.httpTest
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.Test
 import java.net.HttpURLConnection
 import kotlin.test.assertEquals
 
-class EndpointTesting {
-    private val realServer = false
+class EndpointTesting : TestClass {
+    override val useRealServer: Boolean = true
 
     private inline fun withBothClients(
-        local: Boolean = true,
         directApi: Boolean = true,
         cache: Boolean = true,
         useGzip: Boolean = true, code: HttpTest.() -> Unit
     ) {
-        with(HttpTest(local, directApi, cache, useGzip, ClientLibrary.OkHttp), code)
-        with(HttpTest(local, directApi, cache, useGzip, ClientLibrary.Apache), code)
+        with(httpTest( directApi, cache, useGzip, ClientLibrary.OkHttp), code)
+        with(httpTest( directApi, cache, useGzip, ClientLibrary.Apache), code)
     }
 
     @Test
     fun `Invalid uploadCrash requests`() = runBlocking {
-        val response2 = HttpTest(useGzip = false).uploadCrash(TestCrash.Fabric)
+        val response2 = httpTest(useGzip = false).uploadCrash(TestCrash.Fabric)
         assertEquals(HttpURLConnection.HTTP_UNSUPPORTED_TYPE, response2.code)
 
-        with(HttpTest()) {
+        with(httpTest()) {
             val response1 = uploadCrash(TestCrash.Fabric, headers = mapOf("content-encoding" to "gzip"))
             assertEquals(HttpURLConnection.HTTP_UNSUPPORTED_TYPE, response1.code)
 
@@ -36,7 +36,7 @@ class EndpointTesting {
 
     @Test
     fun `Upload Crash`() = runBlocking {
-        withBothClients(local = !realServer) {
+        withBothClients {
             val (response, parsed) = uploadCrashAndParse(TestCrash.Fabric)
             assertEquals(HttpURLConnection.HTTP_OK, response.code)
 
@@ -47,7 +47,7 @@ class EndpointTesting {
 
     @Test
     fun `Invalid getCrash requests`() = runBlocking {
-        with(HttpTest()) {
+        with(httpTest()) {
             for (id in listOf(null, "", "/")) {
                 val response1 = getCrash(id)
                 assertEquals(HttpURLConnection.HTTP_BAD_REQUEST, response1.code)
@@ -60,7 +60,7 @@ class EndpointTesting {
 
     @Test
     fun `Get Crash`() = runBlocking {
-        with(HttpTest()) {
+        with(httpTest()) {
             val (_, uploadResponse) = uploadCrashAndParse(TestCrash.Fabric)
 
             val getResponse = getCrash(uploadResponse.crashId)
@@ -77,7 +77,7 @@ class EndpointTesting {
 
     @Test
     fun `Invalid deleteCrash requests`() = runBlocking {
-        with(HttpTest()) {
+        with(httpTest()) {
             val response1 = deleteCrash(null, "asdf")
             assertEquals(HttpURLConnection.HTTP_BAD_REQUEST, response1.code)
             val response2 = deleteCrash("asdf", null)
@@ -100,7 +100,7 @@ class EndpointTesting {
 
     @Test
     fun `Delete Crash`() = runBlocking {
-        with(HttpTest()) {
+        with(httpTest()) {
             val uploadResponse = uploadCrash(TestCrash.Fabric)
             assertEquals(HttpURLConnection.HTTP_OK, uploadResponse.code)
             val uploadResponseBody =
@@ -116,7 +116,7 @@ class EndpointTesting {
 
     @Test
     fun `Download database`() = runBlocking {
-        with(HttpTest(local = false)) {
+        with(httpTest(local = false)) {
             val unauthorizedResponse = downloadDatabaseOverview("blah")
             assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, unauthorizedResponse.code)
         }

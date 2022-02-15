@@ -1,3 +1,4 @@
+import HttpTest.Companion.httpTest
 import jetbrains.letsPlot.geom.geomPoint
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
@@ -22,10 +23,11 @@ import kotlin.test.Test
 
 
 
-class OnDemandActions {
+class OnDemandActions : TestClass{
+    override val useRealServer: Boolean = true
     @Test
     fun `Download Database Overview`() = runBlocking {
-        with(HttpTest(local = false)) {
+        with(httpTest(local = false)) {
             val response = downloadDatabaseOverview(System.getenv("AdminPassword"))
             databaseOverviewFile.writeText(response.body!!)
         }

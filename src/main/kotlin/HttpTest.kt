@@ -32,13 +32,27 @@ enum class ClientLibrary {
     Apache
 }
 
-class HttpTest(
+interface TestClass {
+    val useRealServer: Boolean
+}
+
+
+
+class HttpTest private constructor(
     local: Boolean = true,
     private val directApi: Boolean = true,
     private val cache: Boolean = true,
     private val useGzip: Boolean = true,
     private val clientLibrary: ClientLibrary = ClientLibrary.OkHttp
 ) {
+    companion object {
+        fun TestClass.httpTest(directApi: Boolean = true,
+                               cache: Boolean = true,
+                               useGzip: Boolean = true,
+                               clientLibrary: ClientLibrary = ClientLibrary.OkHttp, local: Boolean =!useRealServer): HttpTest {
+            return HttpTest(local, directApi, cache, useGzip, clientLibrary)
+        }
+    }
     private val client: IHttpClient = when (clientLibrary) {
         ClientLibrary.OkHttp -> OkHttpTestClient(cache, useGzip)
         ClientLibrary.Apache -> Java11HttpClient()
